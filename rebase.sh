@@ -3,8 +3,8 @@
 
 logger System "Checking if authorized_keys needs to be updated"
 
-git fetch
-CHANGED_FILES=$(git status --porcelain --untracked-files=no | wc -l)
+git fetch origin
+CHANGED_FILES=$(git rev-list HEAD...origin/master --count)
 BASE=$(git rev-parse origin/master)
 
 
