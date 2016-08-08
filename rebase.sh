@@ -2,7 +2,7 @@
 
 git fetch
 CHANGED_FILES=$(git status --porcelain --untracked-files=no | wc -l)
-BASE=$(git merge-base @{0} @{u})
+BASE=$(git rev-parse origin/master)
 
 if [ $CHANGED_FILES -gt 0 ]; then
   logger System "Updating authorized_keys (git commit $BASE)"
