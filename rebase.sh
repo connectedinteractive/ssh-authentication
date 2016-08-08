@@ -1,8 +1,12 @@
 #!/bin/sh
 
+
+logger System "Checking if authorized_keys needs to be updated"
+
 git fetch
 CHANGED_FILES=$(git status --porcelain --untracked-files=no | wc -l)
 BASE=$(git rev-parse origin/master)
+
 
 if [ $CHANGED_FILES -gt 0 ]; then
   logger System "Updating authorized_keys (git commit $BASE)"
@@ -18,6 +22,8 @@ if [ $CHANGED_FILES -gt 0 ]; then
 
   sudo pkill --signal HUP sshd
   sudo service $SSH_SERVICE restart
+else
+  logger System "Nope, authorized_keys is cool just the way it is"
 fi
 
 chmod 600 authorized_keys
