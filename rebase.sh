@@ -11,7 +11,13 @@ if [ $LOCAL = $BASE ]; then
   git fetch
   git reset --hard origin/master
   echo "Restarting SSH (a kludge to kick expired key sessions)"
-  sudo service ssh restart
+
+  if [ -f /etc/debian_version ]; then
+    sudo service ssh restart
+  elif [ -f /etc/redhat-release ]; then
+    sudo service sshd restart
+  fi
+
 else
   echo "Up-to-date, nothing to do"
 fi
