@@ -1,12 +1,10 @@
 #!/bin/sh
 
-git remote update
+git fetch
+CHANGED_FILES=$(git status --porcelain --untracked-files=no | wc -l)
+BASE=$(git merge-base @{0} @{u})
 
-LOCAL=$(git rev-parse @)
-REMOTE=$(git rev-parse @{u})
-BASE=$(git merge-base @ @{u})
-
-if [ $LOCAL = $BASE ]; then
+if [ $CHANGED_FILES -gt 0 ]; then
   logger System "Updating authorized_keys (git commit $BASE)"
   git fetch
   git reset --hard origin/master
@@ -22,4 +20,4 @@ if [ $LOCAL = $BASE ]; then
   sudo service $SSH_SERVICE restart
 fi
 
-chmod 644 authorized_keys
+chmod 600 authorized_keys
