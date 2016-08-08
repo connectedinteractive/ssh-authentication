@@ -15,3 +15,5 @@ if [ $LOCAL = $BASE ]; then
 else
   echo "Up-to-date, nothing to do"
 fi
+
+chmod 644 authorized_keys
