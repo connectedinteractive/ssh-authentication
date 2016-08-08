@@ -3,7 +3,7 @@
 
 logger System "Checking if authorized_keys needs to be updated"
 
-git fetch origin
+git fetch origin --quiet
 CHANGED_FILES=$(git rev-list HEAD...origin/master --count)
 BASE=$(git rev-parse origin/master)
 
